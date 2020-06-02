@@ -1,0 +1,112 @@
+
+body{
+    background: #eceff5;
+}
+
+.my_header {
+    margin-bottom: 80px;
+    padding-left: 0px;
+    padding-right: 0px;
+    
+}
+
+.header {
+    border-bottom: 2px solid #46494f;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    
+    position: relative;
+}
+
+@media screen and (max-width: 1040px) {
+    .container {
+        padding-right: 60px;
+        padding-left: 60px;
+    }
+    
+    
+}
+
+#input_text{
+    margin-bottom: 16px;;
+}
+.alert-danger{
+    margin-top: 16px;
+    
+}
+
+@media screen and (max-width: 1920px) {
+    .list-group{
+        margin-left: 400px;
+        margin-right: 400px;
+    }
+    
+    
+}
+@media screen and (max-width: 1200px) {
+    .list-group{
+        margin-left: 150px;
+        margin-right: 150px;
+    }
+    
+    
+}
+@media screen and (max-width: 600px) {
+    .list-group{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    
+}
+
+.card{
+    margin-top: 16px;
+    
+}
+
+
+
+
+.main_footer {
+    border-top: 2px solid #5d5f63;
+
+    padding: 15px 0;
+    margin-top: 16px;
+}
+
+.borders span{
+    position: fixed;
+    background: #d1d3d8;
+}
+
+.top {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    z-index: 10;
+}
+
+.left {
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 100%;
+    z-index: 10;
+}
+
+.bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    z-index: 10;
+}
+
+.right {
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    z-index: 10;
+}
