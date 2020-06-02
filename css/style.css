@@ -32,7 +32,7 @@ body{
 }
 .alert-danger{
     margin-top: 16px;
-    
+    display: none;
 }
 
 @media screen and (max-width: 1920px) {
@@ -63,9 +63,6 @@ body{
     margin-top: 16px;
     
 }
-
-
-
 
 .main_footer {
     border-top: 2px solid #5d5f63;
@@ -109,4 +106,25 @@ body{
     width: 20px;
     height: 100%;
     z-index: 10;
+}
+
+#first{
+    font-size: 24px;
+    opacity: 100%;
+}
+
+#second{
+    font-size: 16px;
+    opacity: 75%;
+}
+
+#third{
+    font-size: 14px;
+    opacity: 45%;
+}
+
+
+#lastletter{
+    display: inline-block;
+    color: red;
 }
