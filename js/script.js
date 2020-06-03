@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
     var gorod, population,tempString;
+    var imgSrc, cardHREF;
     var ErrorStatus = false;
     var arrayCities = [];
 
@@ -16,9 +17,10 @@ jQuery(document).ready(function($) {
             
             const htmlString = data;
             const parser = new DOMParser();
-            const document = parser.parseFromString(htmlString, 'text/html');
+            var document = parser.parseFromString(htmlString, 'text/html');
             
             var rows = document.querySelectorAll('.no-wikidata[data-wikidata-property-id=P1082] .nowrap');
+            
             try{
                 tempString = rows[0].innerText;
             }
@@ -28,8 +30,15 @@ jQuery(document).ready(function($) {
             }
             try{
                 tempString = rows[0].innerText;
+                ///console.log(rows[0].innerText);
+                
+
+                
+
+
                 // console.log(tempString); // --- tempString это строка населения с википедии
                 var mas=tempString.split("");
+                
                 //console.log(mas);
                 population="";
                 while(/[^[0-9]/.test(mas[0]))
@@ -42,9 +51,19 @@ jQuery(document).ready(function($) {
                     else 
                         break;
                 }
-
+                //console.log("3");
                 population=parseInt(population);
                 console.log(population);
+                //console.log("4");
+                var pics = document.querySelectorAll(".image img");
+                //console.log(pics[0]);
+                //console.log($(pics[0]).attr("src"));
+                //console.log("5");
+                imgSrc = "https:"+$(pics[0]).attr("src");
+                console.log(imgSrc);
+                
+               // console.log("6");
+                
             }
             catch(err){
                 //console.log("Попытка номер 2");
@@ -65,6 +84,10 @@ jQuery(document).ready(function($) {
             });
 
     }
+
+    //$(".card").click(function(){
+    //    $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/");
+    //});
 
 
     //*[@id="mw-content-text"]/div/table[1]/tbody/tr[20]/td/span/span
@@ -92,35 +115,59 @@ jQuery(document).ready(function($) {
     }
 
     function checkCity(city){
+        city = city.toLowerCase();
+       
         if (arrayCities.length == 0){
             arrayCities.push(city);
             console.log(arrayCities);
-            $("#first").text(city);
-            $(".card-title").text(city);
+
+            $("#first").text(firstLetter(city));
+
+            $(".card img").attr("src",imgSrc);
+
+            $(".card-title").text(firstLetter(city));
             $(".card-text").text("Население: "+population+" чел.");
+            
+            $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
+
+
         }
         else if(arrayCities.indexOf(city)==-1){
             var firstChar = city[0];
+            var firstCharCapital = firstChar.toUpperCase();
             var prev = arrayCities[arrayCities.length-1];
             var prev2 = arrayCities[arrayCities.length-2];
             var prev_lastChar = prev[prev.length -1];
-            if(firstChar == prev_lastChar){
+            var prev_lastCharCapital = prev_lastChar.toUpperCase();
+            if(firstChar == prev_lastChar || firstCharCapital == prev_lastCharCapital){
                 arrayCities.push(city);
                 console.log(arrayCities);
-                $("#first").text(city);
-                $("#second").text(prev);
-                $("#third").text(prev2);
-                $(".card-title").text(city);
-                $(".card-text").text(population);
+
+                $("#first").text(firstLetter(city));
+                $("#second").text(firstLetter(prev));
+                try{
+                $("#third").text(firstLetter(prev2));
+                }
+                catch{
+                }
+
+                $(".card img").attr("src",imgSrc);
+
+                $(".card-title").text(firstLetter(city));
+                $(".card-text").text("Население: "+population+" чел.");
+
+                $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
             }
             else    
-                Error("Город должен начинаться с буквы "+prev_lastChar);
+                Error("Город должен начинаться с буквы "+prev_lastCharCapital);
         }
         else
             Error("Такой город уже называли!")
     }
 
-
+    function firstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
 
 
@@ -132,4 +179,7 @@ jQuery(document).ready(function($) {
 // При нажатии на enter убирать выделение c поля ввода
 // Проверка на последнюю букву: если "ь" то брать предыдущую
 // Картинка берется с wiki
-// Название города toLower / upper case
+// города типа Нью-Йорк йорк пишется с маленькой буквы
+// города канады идут по пизде + Токио + города у которых много значений
+// в википедии первая картинка может быть не городом
+
