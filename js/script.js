@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
         var input = $("#input").val();
 
         
-        $.get("https://cors-anywhere.herokuapp.com/https://ru.wikipedia.org/wiki/"+input+"", function(data) {
+        $.get("https://ru.wikipedia.org/wiki/"+input+"", function(data) {
             
             
             const htmlString = data;
@@ -118,32 +118,36 @@ jQuery(document).ready(function($) {
         city = city.toLowerCase();
        
         if (arrayCities.length == 0){
+
             arrayCities.push(city);
+
             console.log(arrayCities);
 
-            $("#first").text(firstLetter(city));
-
-            $(".card img").attr("src",imgSrc);
-
-            $(".card-title").text(firstLetter(city));
-            $(".card-text").text("Население: "+population+" чел.");
-            
-            $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
-
-
+            forFirstChar(city);
+            Card(city);
         }
         else if(arrayCities.indexOf(city)==-1){
             var firstChar = city[0];
             var firstCharCapital = firstChar.toUpperCase();
+
             var prev = arrayCities[arrayCities.length-1];
             var prev2 = arrayCities[arrayCities.length-2];
-            var prev_lastChar = prev[prev.length -1];
+
+            var prev_lastChar=prev[prev.length -1];
+
+            if(prev_lastChar == 'ь' || prev_lastChar == 'ъ')
+                prev_lastChar = prev[prev.length -2];
+            
+
             var prev_lastCharCapital = prev_lastChar.toUpperCase();
+            console.log(prev_lastChar);
             if(firstChar == prev_lastChar || firstCharCapital == prev_lastCharCapital){
                 arrayCities.push(city);
                 console.log(arrayCities);
+                
+                forFirstChar(city);
+                Card(city);
 
-                $("#first").text(firstLetter(city));
                 $("#second").text(firstLetter(prev));
                 try{
                 $("#third").text(firstLetter(prev2));
@@ -151,12 +155,12 @@ jQuery(document).ready(function($) {
                 catch{
                 }
 
-                $(".card img").attr("src",imgSrc);
-
-                $(".card-title").text(firstLetter(city));
-                $(".card-text").text("Население: "+population+" чел.");
-
-                $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
+                /*$.getJSON("js/db.json", function( data ) {
+                    console.log(data.populations[1]);
+                    data.cities.push(city);
+                    data.populations.push(population);
+                    console.log(data);
+                  }); */
             }
             else    
                 Error("Город должен начинаться с буквы "+prev_lastCharCapital);
@@ -169,6 +173,29 @@ jQuery(document).ready(function($) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+    function forFirstChar(city){
+        var lastChar = city[city.length-1];
+
+        if(lastChar== 'ь' || lastChar == 'ъ'){
+            var before_lastChar = city[city.length-2];
+            $("#addon-wrapping").text(before_lastChar.toUpperCase());
+            $("#first").text(firstLetter(city).slice(0,city.length-2));
+            $("#first").append("<div id='lastletter'>"+before_lastChar+"</div><div id='lastletterExc'>"+lastChar+"</div>"); 
+        }else{
+            $("#addon-wrapping").text(lastChar.toUpperCase());
+            $("#first").text(firstLetter(city).slice(0,city.length-1));
+            $("#first").append("<div id='lastletter'>"+lastChar+"</div>");
+        }
+
+        
+    }
+    
+    function Card(city){
+        $(".card img").attr("src",imgSrc);
+        $(".card-title").text(firstLetter(city));
+        $(".card-text").text("Население: "+population+" чел.");
+        $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
+    }
 
 
 
@@ -178,9 +205,10 @@ jQuery(document).ready(function($) {
 
 // При нажатии на enter убирать выделение c поля ввода
 // Проверка на последнюю букву: если "ь" то брать предыдущую
-// Картинка берется с wiki
 // города типа Нью-Йорк йорк пишется с маленькой буквы
 // города канады идут по пизде + Токио + города у которых много значений
 // в википедии первая картинка может быть не городом
+// удалять лишние пробелы
 
-// вадуц
+// вадуц - население
+// новгород - картинка
