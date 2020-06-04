@@ -18,13 +18,32 @@ body{
     position: relative;
 }
 
-#top_layer{
+#score_layer{
    margin-bottom: 16px;
 }
 
-.alert-success{
-    
+#first_layer{
+    margin-bottom: 16px;
 }
+
+.bi-heart-fill{
+    color: red;
+}
+.bi-heart{
+    color: red;
+}
+#p1_score_add, #p2_score_add{
+    opacity: 0;
+    display: none;
+}
+
+.input-group, ul{
+    left: 50%;
+    margin-left: -9rem;
+    position: relative;
+    width: 18rem;
+}
+
 
 @media screen and (max-width: 1040px) {
     .container {
@@ -124,4 +143,36 @@ body{
 
 #addon-wrapping{
     color: rgb(0, 102, 255);
+}
+
+#popup{
+    position: absolute;
+    display: none;
+    
+    width: 60%;
+    height: 70%;
+    top: 10%;
+    left: 20%;
+    background: green;
+
+    z-index: 1000;
+    
+}
+
+#popup p {
+    font-size: 17px;
+    line-height: 1.75em;
+    margin-bottom: 35px;
+}
+
+#popup_overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0.6;
+    z-index: 999;
 }

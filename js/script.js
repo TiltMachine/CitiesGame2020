@@ -1,16 +1,26 @@
 jQuery(document).ready(function($) {
-    var gorod, population,tempString;
-    var imgSrc, cardHREF;
+    var population,tempString;
+    var imgSrc;
+    var turn = 1, p1score = 0, p2score = 0, p1hp = 3, p2hp = 3;
     var ErrorStatus = false;
     var arrayCities = [];
 
 
+
+    $("#popup_overlay").click(function () {
+        $("#popup, #popup_overlay").hide();
+    });
+
+
     function myClick(){
+
+        
+
         ErrorStatus=false;
-        console.log("Button Clicked");
+        //console.log("Button Clicked");
 
         var input = $("#input").val();
-
+        input = clear(input);
         
         $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
@@ -18,29 +28,15 @@ jQuery(document).ready(function($) {
             const htmlString = data;
             const parser = new DOMParser();
             var document = parser.parseFromString(htmlString, 'text/html');
-            
-            //var rows = document.querySelectorAll('.no-wikidata[data-wikidata-property-id=P1082] .nowrap');
+
             var rows = document.querySelector("body > div.global > div > div.field_center > div:nth-child(4) > table > tbody > tr:nth-child(2) > td:nth-child(2)");
 
-            /*try{
-                tempString = rows.innerText;
-            }
-            catch(err){
-                console.log("Этого города нет в базе данных");
-                //rows = document.querySelectorAll("td > ul > li > span.wikidata-snak.wikidata-main-snak");
-            }*/
             try{
                 tempString = rows.innerText;
-                console.log(rows.innerText);
+                //console.log(rows.innerText);
                 
-
-                
-
-
-                // console.log(tempString); // --- tempString это строка населения с википедии
                 var mas=tempString.split("");
-                
-                //console.log(mas);
+
                 population="";
                 while(/[^[0-9]/.test(mas[0]))
                     mas.splice(0,1);
@@ -52,26 +48,23 @@ jQuery(document).ready(function($) {
                     else 
                         break;
                 }
-                //console.log("3");
                 population=parseInt(population);
                 console.log(population);
-                //console.log("4");
-                
 
-               // console.log("imgSRC: "+imgSrc);
             }
             catch(err){
                 console.log("Этого города нет в базе данных");
                 Error("Такой город нам неизвестен!");
             }
         }).done(function() {
-
-            $.get("https://yandex.ru/images/search?text=город%20"+input+"", function(d) {
+            var url = "https://yandex.ru/images/search?text=город%20"+input;
+            console.log("in: "+ url);
+            $.get(url, function(d) {
                     const htmlString = d;
                     const parser = new DOMParser();
                     var document = parser.parseFromString(htmlString, 'text/html');
                     var pics = document.querySelectorAll("div > a > img");
-                    console.log(pics[0]);
+                    //console.log(pics[0]);
                     imgSrc = "https:"+$(pics[0]).attr("src");
                     console.log(imgSrc);
                 }).done(function() {
@@ -87,20 +80,10 @@ jQuery(document).ready(function($) {
             })
             .fail(function() {
             console.log("ERROR: 404 страницы не существует!");
-            //console.log(tempString);
             Error("Такой город нам неизвестен!");
             });
 
     }
-
-    //$(".card").click(function(){
-    //    $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/");
-    //});
-
-
-    //*[@id="mw-content-text"]/div/table[1]/tbody/tr[20]/td/span/span
-    
-
     
     $("#enter").click(function(){
         myClick()
@@ -113,18 +96,22 @@ jQuery(document).ready(function($) {
 
     function Error(message){
         ErrorStatus = true;
-        
+        HPloss(turn);
         $(".alert-danger").text(message);
         $(".alert-danger").show('350');
     
         setTimeout(function () {
             $(".alert-danger").hide('350');
-        }, 4000);
+        }, 3000);
+
+
+
+
     }
 
     function checkCity(city){
         city = city.toLowerCase();
-       
+        //city = clear(city);
         if (arrayCities.length == 0){
 
             arrayCities.push(city);
@@ -133,6 +120,8 @@ jQuery(document).ready(function($) {
 
             forFirstChar(city);
             Card(city);
+
+            AddScore(turn);
         }
         else if(arrayCities.indexOf(city)==-1){
             var firstChar = city[0];
@@ -148,7 +137,7 @@ jQuery(document).ready(function($) {
             
 
             var prev_lastCharCapital = prev_lastChar.toUpperCase();
-            console.log(prev_lastChar);
+            //console.log(prev_lastChar);
             if(firstChar == prev_lastChar || firstCharCapital == prev_lastCharCapital){
                 arrayCities.push(city);
                 console.log(arrayCities);
@@ -156,25 +145,20 @@ jQuery(document).ready(function($) {
                 forFirstChar(city);
                 Card(city);
 
+                AddScore(turn);
+
                 $("#second").text(firstLetter(prev));
                 try{
                 $("#third").text(firstLetter(prev2));
                 }
-                catch{
+                catch(err){
                 }
-
-                /*$.getJSON("js/db.json", function( data ) {
-                    console.log(data.populations[1]);
-                    data.cities.push(city);
-                    data.populations.push(population);
-                    console.log(data);
-                  }); */
             }
             else    
                 Error("Город должен начинаться с буквы "+prev_lastCharCapital);
         }
         else
-            Error("Такой город уже называли!")
+            Error("Такой город уже называли!");
     }
 
     function firstLetter(string) {
@@ -199,24 +183,90 @@ jQuery(document).ready(function($) {
     }
     
     function Card(city){
+        //console.log(city);
+        //city = clear(city);
+        //console.log(city);
         $(".card img").attr("src",imgSrc);
         $(".card-title").text(firstLetter(city));
         $(".card-text").text("Население: "+population+" чел.");
         $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
     }
 
+    function AddScore(player){
+        $("#p"+player+"_score_add").text("+"+population);
+
+        $("#p"+player+"_score_add").css({opacity: 1});
+        $("#p1_score_add").show('slow');
+        $("#p2_score_add").show('slow');
+
+        setTimeout(function () {
+            $("#p"+player+"_score_add").css({opacity: 0});
+            $("#p1_score_add").hide('slow');
+            $("#p2_score_add").hide('slow');
+            
+        }, 1000);
+
+        if(player == 1){
+            p1score+= population;
+            $("#p1_score").text(p1score);
+            //$("#p1_score_add").show('slow');
+            turn++;
+        }
+        else{
+            p2score+= population;
+            $("#p2_score").text(p2score);
+            turn--;
+        }
+    }
+
+    function HPloss(p){
+        
+
+        if (p==1){
+            $("#p1_HP"+p1hp).replaceWith("<svg class='bi bi-heart' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/></svg>");
+            p1hp--;
+            if(p1hp==0){
+                gameOver(p);
+            }
+        }
+        else{
+            $("#p2_HP"+p2hp).replaceWith("<svg class='bi bi-heart' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/></svg>");
+            p2hp--;
+            if(p2hp==0){
+                gameOver(p);
+            }
+        }
+    }
+
+    function clear(name){
+        var str=name.split("");
+        var newstr="";
+        while(str[0].charCodeAt()===32) str.splice(0,1);
+        while(str[str.length-1].charCodeAt()===32) str.splice(str.length-1,1);
+        console.log(str);
+        for(i=0;i<str.length;i++){
+        if(str[i]==='-')
+        str[i+1]=str[i+1].toUpperCase();
+        newstr+=str[i];
+        }
+        return newstr;
+        }
 
 
+    function gameOver(p){
+        $("#popup, #popup_overlay").fadeIn();
+        $("#popup").text("Игрок "+p+ " проиграл");
+    }
 
 });
 
 
-// При нажатии на enter убирать выделение c поля ввода
-// Проверка на последнюю букву: если "ь" то брать предыдущую
-// города типа Нью-Йорк йорк пишется с маленькой буквы
-// города канады идут по пизде + Токио + города у которых много значений
-// в википедии первая картинка может быть не городом
-// удалять лишние пробелы
+// При нажатии на enter стирать введеный текст
+// картинки с яндекса требуют капчу
 
-// вадуц - население
-// новгород - картинка
+
+// задача Саши:
+
+// Сделать отдельную функцию под таймер
+// id="timer" - элемент в HTML куда надо будет передавать значение таймера
+// таймер запускается после того как введется первое слово и обновляется после каждого верно введенного слова, по достижению 0 сек. останавливать 
