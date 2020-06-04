@@ -1,6 +1,10 @@
 
 body{
-    background: #eceff5;
+    background: url(../bg3.png);
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+    
 }
 
 .my_header {
@@ -34,7 +38,7 @@ body{
 }
 #p1_score_add, #p2_score_add{
     opacity: 0;
-    display: none;
+    
 }
 
 .input-group, ul{

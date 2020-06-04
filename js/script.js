@@ -58,14 +58,18 @@ jQuery(document).ready(function($) {
             }
         }).done(function() {
             var url = "https://yandex.ru/images/search?text=город%20"+input;
+            //var url = "https://duckduckgo.com/?q=город+"+input+"&=h_&iar=images&iax=images&ia=images";
             console.log("in: "+ url);
             $.get(url, function(d) {
                     const htmlString = d;
+                    //console.log(htmlString);
                     const parser = new DOMParser();
                     var document = parser.parseFromString(htmlString, 'text/html');
                     var pics = document.querySelectorAll("div > a > img");
-                    //console.log(pics[0]);
+                    //var pics = document.querySelectorAll("#zci-images > div > div.tile-wrap > div > div:nth-child(3) > div.tile--img__media > span > img");
+                    //console.log(pics);
                     imgSrc = "https:"+$(pics[0]).attr("src");
+                    
                     console.log(imgSrc);
                 }).done(function() {
 
@@ -195,16 +199,18 @@ jQuery(document).ready(function($) {
     function AddScore(player){
         $("#p"+player+"_score_add").text("+"+population);
 
-        $("#p"+player+"_score_add").css({opacity: 1});
-        $("#p1_score_add").show('slow');
-        $("#p2_score_add").show('slow');
+        //$("#p"+player+"_score_add").css({opacity: 1});
+        $("#p"+player+"_score_add").fadeTo('fast',1);
+        //$("#p1_score_add").show('slow');
+        //$("#p2_score_add").show('slow');
 
         setTimeout(function () {
-            $("#p"+player+"_score_add").css({opacity: 0});
-            $("#p1_score_add").hide('slow');
-            $("#p2_score_add").hide('slow');
+            //$("#p"+player+"_score_add").css({opacity: 0});
+            $("#p"+player+"_score_add").fadeTo('fast',0);
+            // $("#p1_score_add").hide('slow');
+            //$("#p2_score_add").hide('slow');
             
-        }, 1000);
+        }, 1500);
 
         if(player == 1){
             p1score+= population;
@@ -255,7 +261,10 @@ jQuery(document).ready(function($) {
 
     function gameOver(p){
         $("#popup, #popup_overlay").fadeIn();
-        $("#popup").text("Игрок "+p+ " проиграл");
+
+        //$("#popup").load("popup_gameover1.html");
+
+        //$("#popup").text("Игрок "+p+ " проиграл");
     }
 
 });
