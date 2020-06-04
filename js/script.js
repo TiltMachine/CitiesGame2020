@@ -12,25 +12,26 @@ jQuery(document).ready(function($) {
         var input = $("#input").val();
 
         
-        $.get("https://ru.wikipedia.org/wiki/"+input+"", function(data) {
+        $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
             
             const htmlString = data;
             const parser = new DOMParser();
             var document = parser.parseFromString(htmlString, 'text/html');
             
-            var rows = document.querySelectorAll('.no-wikidata[data-wikidata-property-id=P1082] .nowrap');
-            
-            try{
-                tempString = rows[0].innerText;
+            //var rows = document.querySelectorAll('.no-wikidata[data-wikidata-property-id=P1082] .nowrap');
+            var rows = document.querySelector("body > div.global > div > div.field_center > div:nth-child(4) > table > tbody > tr:nth-child(2) > td:nth-child(2)");
+
+            /*try{
+                tempString = rows.innerText;
             }
             catch(err){
-                console.log("Попытка номер 2");
-                rows = document.querySelectorAll("td > ul > li > span.wikidata-snak.wikidata-main-snak");
-            }
+                console.log("Этого города нет в базе данных");
+                //rows = document.querySelectorAll("td > ul > li > span.wikidata-snak.wikidata-main-snak");
+            }*/
             try{
-                tempString = rows[0].innerText;
-                ///console.log(rows[0].innerText);
+                tempString = rows.innerText;
+                console.log(rows.innerText);
                 
 
                 
@@ -55,30 +56,37 @@ jQuery(document).ready(function($) {
                 population=parseInt(population);
                 console.log(population);
                 //console.log("4");
-                var pics = document.querySelectorAll(".image img");
-                //console.log(pics[0]);
-                //console.log($(pics[0]).attr("src"));
-                //console.log("5");
-                imgSrc = "https:"+$(pics[0]).attr("src");
-                console.log(imgSrc);
                 
-               // console.log("6");
-                
+
+               // console.log("imgSRC: "+imgSrc);
             }
             catch(err){
-                //console.log("Попытка номер 2");
-                console.log("Страница не про город");
-                //console.log(tempString);
+                console.log("Этого города нет в базе данных");
                 Error("Такой город нам неизвестен!");
-               //32
             }
         }).done(function() {
-                if(!ErrorStatus){
-                    checkCity(input);
-                }
+
+            $.get("https://yandex.ru/images/search?text=город%20"+input+"", function(d) {
+                    const htmlString = d;
+                    const parser = new DOMParser();
+                    var document = parser.parseFromString(htmlString, 'text/html');
+                    var pics = document.querySelectorAll("div > a > img");
+                    console.log(pics[0]);
+                    imgSrc = "https:"+$(pics[0]).attr("src");
+                    console.log(imgSrc);
+                }).done(function() {
+
+                    if(!ErrorStatus){
+                        checkCity(input);
+                    }
+
+
+                });
+
+                
             })
             .fail(function() {
-            console.log("404 страницы нема");
+            console.log("ERROR: 404 страницы не существует!");
             //console.log(tempString);
             Error("Такой город нам неизвестен!");
             });

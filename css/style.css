@@ -18,6 +18,14 @@ body{
     position: relative;
 }
 
+#top_layer{
+   margin-bottom: 16px;
+}
+
+.alert-success{
+    
+}
+
 @media screen and (max-width: 1040px) {
     .container {
         padding-right: 60px;
@@ -27,36 +35,14 @@ body{
     
 }
 
-#input_text{
-    margin-bottom: 16px;;
+.input-group {
+    
+    margin-bottom: 16px;;   
 }
+
 .alert-danger{
     margin-top: 16px;
     display: none;
-}
-
-@media screen and (max-width: 1920px) {
-    .list-group{
-        margin-left: 400px;
-        margin-right: 400px;
-    }
-    
-    
-}
-@media screen and (max-width: 1200px) {
-    .list-group{
-        margin-left: 150px;
-        margin-right: 150px;
-    }
-    
-    
-}
-@media screen and (max-width: 600px) {
-    .list-group{
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-    
 }
 
 .card{
