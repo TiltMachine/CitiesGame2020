@@ -286,6 +286,7 @@ function SetTimer(time) //time - время для обратного отсчёта
 }
 
     function gameOver(p){
+        clearInterval(timer);
         $("#popup, #popup_overlay").fadeIn();
 
         //$("#popup").load("popup_gameover1.html");
