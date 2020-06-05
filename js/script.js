@@ -299,6 +299,10 @@ jQuery(document).ready(function($) {
         }, 1000);
     }
 
+    $("#settings_icon").click(function(){
+        $("#popup, #popup_overlay").fadeIn();
+    });
+
     function gameOver(p){
         state_gameover = true;
         clearInterval(timer);
