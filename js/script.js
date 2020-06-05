@@ -5,6 +5,7 @@ jQuery(document).ready(function($) {
     var ErrorStatus = false;
     var arrayCities = [];
     var timer=undefined;
+    var state_gameover = false;
 
 
     $("#popup_overlay").click(function () {
@@ -59,7 +60,7 @@ jQuery(document).ready(function($) {
         }).done(function() {
             var url = "https://yandex.ru/images/search?text=РіРѕСЂРѕРґ%20"+input;
             //var url = "https://duckduckgo.com/?q=РіРѕСЂРѕРґ+"+input+"&=h_&iar=images&iax=images&ia=images";
-            console.log("in: "+ url);
+            //console.log("in: "+ url);
             $.get(url, function(d) {
                     const htmlString = d;
                     //console.log(htmlString);
@@ -70,7 +71,7 @@ jQuery(document).ready(function($) {
                     //console.log(pics);
                     imgSrc = "https:"+$(pics[0]).attr("src");
                     
-                    console.log(imgSrc);
+                    //console.log(imgSrc);
                 }).done(function() {
 
                     if(!ErrorStatus){
@@ -147,9 +148,13 @@ jQuery(document).ready(function($) {
                 console.log(arrayCities);
                 
                 clearInterval(timer);
-                if (arrayCities.length<5) SetTimer(15);
-                else if (arrayCities.length<10) SetTimer(30);
-                else SetTimer(55);
+                if (arrayCities.length<5)
+                    SetTimer(15);
+                else if (arrayCities.length<10)
+                    SetTimer(30);
+                else 
+                    SetTimer(45);
+
                 forFirstChar(city);
                 Card(city);
 
@@ -248,49 +253,57 @@ jQuery(document).ready(function($) {
         }
     }
 
-    function clear(name){
+    function clear(name){ // СѓРґР°Р»СЏРµС‚ Р»РёС€РЅРёРµ РїСЂРѕР±РµР»С‹, РѕР±СЂР°Р±Р°С‚С‹РІР°РµС‚ РіРѕСЂРѕРґР° СЃ РґРµС„РёСЃРѕРј
         var str=name.split("");
         var newstr="";
-        while(str[0].charCodeAt()===32) str.splice(0,1);
-        while(str[str.length-1].charCodeAt()===32) str.splice(str.length-1,1);
-        console.log(str);
+        while(str[0].charCodeAt()===32)
+            str.splice(0,1);
+        while(str[str.length-1].charCodeAt()===32)
+            str.splice(str.length-1,1);
+        //console.log(str);
         for(i=0;i<str.length;i++){
-        if(str[i]==='-')
-        str[i+1]=str[i+1].toUpperCase();
-        newstr+=str[i];
+            if(str[i]==='-')
+                str[i+1]=str[i+1].toUpperCase();
+            newstr+=str[i];
         }
         return newstr;
-        }
+    }
 
-function SetTimer(time) //time - время для обратного отсчёта
-{
-    timer=setInterval(function() {
-                if (time>9) $('#timer').text(":"+time+"");
-                else $('#timer').text(":0"+time+"");
-                if (time>0) time--; //уменьшаем секунды
-                else //иначе - отнимается жизнь и ход переключается
-                {                    
-                    clearInterval(timer);
-                    console.log("TimeFail");
-                    console.log(turn);
-                    HPloss(turn);
-                    if (turn===1)
-                        turn++;
-                    else turn--;
-                    console.log(turn);
-                    if (arrayCities.length<5) SetTimer(15);
-                    else if (arrayCities.length<10) SetTimer(30);
-                    else SetTimer(55);
+    function SetTimer(time){
+        timer=setInterval(function() {
+            if (time>9)
+                $('#timer').text(":"+time+"");
+            else
+                $('#timer').text(":0"+time+"");
+            if (time>0) 
+                time--; 
+            else{                    
+                clearInterval(timer);
+                console.log("TimeFail");
+                console.log("РЎРµР№С‡Р°СЃ С…РѕРґ Р±С‹Р» С…РѕРґ РёРіСЂРѕРєР°: "+turn);
+                HPloss(turn);
+                if (turn===1)
+                    turn++;
+                else
+                    turn--;
+                console.log(turn);
+                if(!state_gameover){
+                    if (arrayCities.length<5)
+                        SetTimer(15);
+                    else if (arrayCities.length<10)
+                        SetTimer(30);
+                    else
+                        SetTimer(45);
                 }
-            }, 1000);
-}
+            }
+        }, 1000);
+    }
 
     function gameOver(p){
-        $("#popup, #popup_overlay").fadeIn();
-
-        //$("#popup").load("popup_gameover1.html");
-
-        //$("#popup").text("Р?РіСЂРѕРє "+p+ " РїСЂРѕРёРіСЂР°Р»");
+        state_gameover = true;
+        clearInterval(timer);
+        console.log("GAMEOVER");
+        //$("#popup, #popup_overlay").fadeIn();
     }
 
 });
