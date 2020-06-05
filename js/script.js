@@ -21,6 +21,7 @@ jQuery(document).ready(function($) {
 
         var input = $("#input").val();
         input = clear(input);
+		$("#input").val("");
         
         $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
