@@ -12,7 +12,6 @@ jQuery(document).ready(function($) {
         $("#popup, #popup_overlay").hide();
     });
 
-
     function myClick(){
 
         
@@ -21,7 +20,6 @@ jQuery(document).ready(function($) {
         //console.log("Button Clicked");
 
         var input = $("#input").val();
-        $('#input').val("");
         input = clear(input);
         
         $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
@@ -302,6 +300,7 @@ jQuery(document).ready(function($) {
 
     $("#settings_icon").click(function(){
         $("#popup, #popup_overlay").fadeIn();
+        $("#popup").load("settings.html");
     });
 
     function gameOver(p){
