@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
     var turn = 1, p1score = 0, p2score = 0, p1hp = 3, p2hp = 3;
     var ErrorStatus = false;
     var arrayCities = [];
-
+    var timer=undefined;
 
 
     $("#popup_overlay").click(function () {
@@ -121,7 +121,7 @@ jQuery(document).ready(function($) {
             arrayCities.push(city);
 
             console.log(arrayCities);
-
+            SetTimer(15);
             forFirstChar(city);
             Card(city);
 
@@ -146,6 +146,10 @@ jQuery(document).ready(function($) {
                 arrayCities.push(city);
                 console.log(arrayCities);
                 
+                clearInterval(timer);
+                if (arrayCities.length<5) SetTimer(15);
+                else if (arrayCities.length<10) SetTimer(30);
+                else SetTimer(55);
                 forFirstChar(city);
                 Card(city);
 
@@ -258,13 +262,35 @@ jQuery(document).ready(function($) {
         return newstr;
         }
 
+function SetTimer(time) //time - время для обратного отсчёта
+{
+    timer=setInterval(function() {
+                if (time>9) $('#timer').text(":"+time+"");
+                else $('#timer').text(":0"+time+"");
+                if (time>0) time--; //уменьшаем секунды
+                else //иначе - отнимается жизнь и ход переключается
+                {                    
+                    clearInterval(timer);
+                    console.log("TimeFail");
+                    console.log(turn);
+                    HPloss(turn);
+                    if (turn===1)
+                        turn++;
+                    else turn--;
+                    console.log(turn);
+                    if (arrayCities.length<5) SetTimer(15);
+                    else if (arrayCities.length<10) SetTimer(30);
+                    else SetTimer(55);
+                }
+            }, 1000);
+}
 
     function gameOver(p){
         $("#popup, #popup_overlay").fadeIn();
 
         //$("#popup").load("popup_gameover1.html");
 
-        //$("#popup").text("РРіСЂРѕРє "+p+ " РїСЂРѕРёРіСЂР°Р»");
+        //$("#popup").text("Р?РіСЂРѕРє "+p+ " РїСЂРѕРёРіСЂР°Р»");
     }
 
 });
