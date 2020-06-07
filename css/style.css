@@ -249,9 +249,12 @@ body{
 #block4{
     background-color: orange;
 }
-#settings{
+#settings, #finish{
     display: flex;
     flex-direction: column;
     height: 100%;
     justify-content: space-around;
+}
+#winner{
+    text-align: center;
 }
