@@ -1,6 +1,6 @@
 
 body{
-    background: url(../img/bg51.jpg);
+    background: url(../img/bg6.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -56,18 +56,24 @@ body{
     position: relative;
     width: 100%;
 }*/   
-.heart{
+.heart, .score, .player{
     position: relative;
 }
-.score{
-    position: relative;
+.player{
+    margin-bottom: 5%;
 }
-.bi,#p1_score,#p2_score{
+.playermain{
+    width: 11%;
+}
+.bi,#p1_score,#p2_score, .playername{
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
+}
+.imgplayer{
+    width: 100%;
 }
 @media screen and (max-width: 450px){
     .imgscore{
@@ -82,6 +88,13 @@ body{
     }
     #score2{
         right:16%;
+    }
+    .playername{
+        width:115%;
+    }
+    .playermain{
+        width: 30%;
+        right: 10%;
     }
 } 
 .bi-heart-fill{
