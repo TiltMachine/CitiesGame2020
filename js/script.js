@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
 
         var input = $("#input").val();
         input = clear(input);
-		$("#input").val("");
+        
         
         $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
@@ -100,8 +100,14 @@ jQuery(document).ready(function($) {
 
     }
     
-    $("#enter").click(function(){
-        myClick()
+
+    $(".input-group").click(function(){
+        console.log(state_gameover,p1score,arrayCities);
+
+        if(state_gameover){
+            
+            console.log("vse");
+        }
     });
     $("#input").keypress(function(event) {
         if (event.keyCode == 13)
@@ -128,7 +134,7 @@ jQuery(document).ready(function($) {
         city = city.toLowerCase();
         //city = clear(city);
         if (arrayCities.length == 0){
-
+            $("#input").val("");
             arrayCities.push(city);
 
             console.log(arrayCities);
@@ -154,6 +160,7 @@ jQuery(document).ready(function($) {
             var prev_lastCharCapital = prev_lastChar.toUpperCase();
             //console.log(prev_lastChar);
             if(firstChar == prev_lastChar || firstCharCapital == prev_lastCharCapital){
+                $("#input").val("");
                 arrayCities.push(city);
                 console.log(arrayCities);
                 
@@ -248,17 +255,17 @@ jQuery(document).ready(function($) {
         
 
         if (p==1){
-            $("#p1_HP"+p1hp).replaceWith("<svg class='bi bi-heart' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/></svg>");
+            $("#p1_HP"+p1hp).replaceWith("<svg id='p1_HP"+p1hp+"' class='bi bi-heart' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/></svg>");
             p1hp--;
             if(p1hp==0){
-                gameOver(p);
+                gameOver(2);
             }
         }
         else{
-            $("#p2_HP"+p2hp).replaceWith("<svg class='bi bi-heart' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/></svg>");
+            $("#p2_HP"+p2hp).replaceWith("<svg id='p2_HP"+p2hp+"' class='bi bi-heart' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/></svg>");
             p2hp--;
             if(p2hp==0){
-                gameOver(p);
+                gameOver(1);
             }
         }
     }
@@ -310,6 +317,12 @@ jQuery(document).ready(function($) {
     }
 
     $("#settings_icon").click(function(){
+        settingsMenuOpen();
+    });
+
+    function settingsMenuOpen(){
+        
+        console.log(state_gameover,p1score,arrayCities);
         $("#popup, #popup_overlay").fadeIn();
         $("#popup").load("settings.html", function(){
 
@@ -329,10 +342,14 @@ jQuery(document).ready(function($) {
 
                 setDifficulty();
             });
+
+            $("#restart_button").click(function () {
+                restartGame();
+            });
         
-        
+           
         });
-    });
+    }
 
     $("#popup_overlay").click(function () {
         console.log(difficulty);
@@ -345,32 +362,49 @@ jQuery(document).ready(function($) {
         state_gameover = true;
         clearInterval(timer);
         console.log("GAMEOVER");
-        //$("#popup, #popup_overlay").fadeIn();
+        
+        $("#popup, #popup_overlay").fadeIn();       
+        $("#popup").load("js/popup_gameover1.html", function(){
+                $("#winner").text("Победа Игрока "+p);
+                $("#retry").click(function(){
+                    restartGame();
+                });
+                $("#goto_settings").click(function(){
+                    settingsMenuOpen();
+                });
+        });
+    }
+
+    function restartGame(){
+        for(var i=1;i<=3;i++){
+            $("#p1_HP"+i).replaceWith("<svg id='p1_HP"+i+"' class='bi bi-heart-fill' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'/></svg>");
+            $("#p2_HP"+i).replaceWith("<svg id='p2_HP"+i+"' class='bi bi-heart-fill' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'/></svg>");
+        }
+        state_gameover = false;
+        $("#p1_score").text("0");
+        $("#p2_score").text("0");
+        $('#timer').text(":15");
+        $('.input-group-text').text("");
+        $('#first, #second, #third').text("");
+        $('.card-title').text("Название города");
+        $('.card-text').text("Информация о городе");
+        $('#wikiLink').attr("href","#");
+        $(".card img").attr("src","img/q.png");
+
+        setDifficulty();
+        p1score = 0;
+        p2score = 0;
+        arrayCities = [];
+        turn = 1;
+        clearInterval(timer);
+        console.log(state_gameover,p1score,arrayCities);
     }
 
 });
 
 /*
-При нажатии на enter стирать введеный текст
+
 картинки с яндекса требуют капчу
 
-
-Задача Вани:
-
-Пофиксить чтоб при мобильном разрешении ничего не съезжало
-
-При нажатии на кнопку настроек вылазит зеленое окошко, задний фон затемняется, тебе надо в этом окошке красиво расположить несколько элементов, я покажу как,
-для начала просто div сделай с текстом чтоб проверить, потом добавим графику
-
-$("#popup, #popup_overlay").fadeIn(); эта функция открывает это окошко если ч
-
-Либо делаешь это с помощью  функции load типа $("#popup").load("popup_gameover1.html"); popup_gameover1.html -
- в этом файле сначала все верстаешь и потом подключаешь его в popup. Это самый ахуенный вариант если сможешь сделать
-Либо сначала в index.html верстаешь также все и просто показываешь это окошко. Ну этот вариант по хуже
-
-Задача Саши:
-Начать накидывать документацию
-При нажатии на enter стирать введеный текст в поле для ввода
-Подумать над дизайном, чтобы был какой то стиль. Задний фон + цвета. 
 
 */
