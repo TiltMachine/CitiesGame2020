@@ -213,7 +213,7 @@ body{
     height: 70%;
     top: 10%;
     left: 20%;
-    background: green;
+    background: white;
 
     z-index: 1000;
     
@@ -237,18 +237,7 @@ body{
     z-index: 999;
 }
 
-#block1{
-    background-color: greenyellow;
-}
-#block2{
-    background-color: aqua;
-}
-#block3{
-    background-color: yellow;
-}
-#block4{
-    background-color: orange;
-}
+
 #settings{
     display: flex;
     flex-direction: column;

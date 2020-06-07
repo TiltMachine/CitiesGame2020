@@ -6,11 +6,21 @@ jQuery(document).ready(function($) {
     var arrayCities = [];
     var timer=undefined;
     var state_gameover = false;
+    var difficulty = 0;
 
 
-    $("#popup_overlay").click(function () {
-        $("#popup, #popup_overlay").hide();
-    });
+    function setDifficulty(){
+        if(difficulty==1){
+            p1hp = 1;
+            p2hp = 1; 
+            $("#p1_HP3, #p2_HP3, #p1_HP2, #p2_HP2").hide();
+        }
+        else{
+            p1hp = 3;
+            p2hp = 3;
+            $("#p1_HP3, #p2_HP3, #p1_HP2, #p2_HP2").show(); 
+        }    
+    }    
 
     function myClick(){
 
@@ -301,9 +311,36 @@ jQuery(document).ready(function($) {
 
     $("#settings_icon").click(function(){
         $("#popup, #popup_overlay").fadeIn();
-        $("#popup").load("settings.html");
+        $("#popup").load("settings.html", function(){
+
+            if (difficulty==1)
+                $("#hardcore").attr("checked", "checked");
+            
+
+            $("#go_back_button").click(function () {
+                $("#popup, #popup_overlay").fadeOut();
+            });
+            
+            $("#save_button").click(function () {
+                if ($("#hardcore").prop("checked")==true)
+                    difficulty = 1;
+                else
+                    difficulty = 0;
+
+                setDifficulty();
+            });
+        
+        
+        });
     });
 
+    $("#popup_overlay").click(function () {
+        console.log(difficulty);
+        $("#popup, #popup_overlay").fadeOut();
+    });
+
+    
+    
     function gameOver(p){
         state_gameover = true;
         clearInterval(timer);
