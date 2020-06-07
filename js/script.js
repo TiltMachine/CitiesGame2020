@@ -7,6 +7,7 @@ jQuery(document).ready(function($) {
     var timer=undefined;
     var state_gameover = false;
     var difficulty = 0;
+    var points=30000000;
 
 
     function setDifficulty(){
@@ -243,11 +244,13 @@ jQuery(document).ready(function($) {
             $("#p1_score").text(p1score);
             //$("#p1_score_add").show('slow');
             turn++;
+            if (p1score>=points) gameOver(1);
         }
         else{
             p2score+= population;
             $("#p2_score").text(p2score);
             turn--;
+            if (p2score>=points) gameOver(2);
         }
     }
 
@@ -329,7 +332,6 @@ jQuery(document).ready(function($) {
             if (difficulty==1)
                 $("#hardcore").attr("checked", "checked");
             
-
             $("#go_back_button").click(function () {
                 $("#popup, #popup_overlay").fadeOut();
             });
@@ -341,6 +343,10 @@ jQuery(document).ready(function($) {
                     difficulty = 0;
 
                 setDifficulty();
+                
+                if($("#inputset").val()!=="") 
+                    points=$("#inputset").val();
+            
             });
 
             $("#restart_button").click(function () {
