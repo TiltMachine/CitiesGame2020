@@ -21,7 +21,6 @@ jQuery(document).ready(function($) {
 
         var input = $("#input").val();
         input = clear(input);
-		$("#input").val("");
         
         $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
@@ -308,7 +307,16 @@ jQuery(document).ready(function($) {
         state_gameover = true;
         clearInterval(timer);
         console.log("GAMEOVER");
-        //$("#popup, #popup_overlay").fadeIn();
+        
+        $("#popup, #popup_overlay").fadeIn();       
+        $("#popup").load("js/popup_gameover1.html", function(){
+            if(p2hp===0) {
+            $("#winner").text("Победа Игрока 1");
+        }
+        else if (p1hp===0) {
+            $("#winner").text("Победа Игрока 2");
+        }
+        });
     }
 
 });
