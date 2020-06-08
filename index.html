@@ -40,77 +40,96 @@
         <div id="first_layer" class="d-flex justify-content-between">
             <div class="playermain">
                 <div class="player">
-                    <img class="imgplayer" src="img/player.png" alt="1">
+                    
                     <div class="playername">Игрок 1</div>
                 </div>
+
                 <div id="p1_HP" class="d-flex flex-row justify-content-around">
                     <div class="heart">
-                       <img src="img/heart1.png" alt="1">
+                       <img src="img/heart5.png" alt="1">
                     <svg id="p1_HP1" class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     </div>
                     <div class="heart">
-                       <img src="img/heart1.png" alt="1">
+                       <img src="img/heart5.png" alt="1">
                     <svg id="p1_HP2" class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     </div>
                     <div class="heart">
-                       <img src="img/heart1.png" alt="1">
+                       <img src="img/heart5.png" alt="1">
                     <svg id="p1_HP3" class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     </div>
                    
-                </div>         
+                </div>
+
+                <div class="score">
+                    
+                    <div id="p1_score" class="text-nowrap">0</div>
+                </div> 
+                
+
             </div>
+
             <div>
-            <img id="timer_icon" src="img/timer.png" alt="settings"/>
+                <img id="timer_icon" src="img/timer.png" alt="settings"/>
+                <div id="timer">:15</div>
+                <div id="goal">Цель: 30 000 000</div>
             </div>
+            
             <div class="playermain">
                 <div class="player">
-                    <img class="imgplayer" src="img/player.png" alt="1">
+                    
                     <div class="playername">Игрок 2</div>
                 </div>
                 <div id="p2_HP" class="d-flex flex-row justify-content-around">
                     <div class="heart">
-                       <img src="img/heart1.png" alt="1">
+                       <img src="img/heart5.png" alt="1">
                     <svg id="p2_HP1" class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     </div>
                     <div class="heart">
-                       <img src="img/heart1.png" alt="1">
+                       <img src="img/heart5.png" alt="1">
                     <svg id="p2_HP2" class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     </div>
                     <div class="heart">
-                       <img src="img/heart1.png" alt="1">
+                       <img src="img/heart5.png" alt="1">
                     <svg id="p2_HP3" class="bi bi-heart-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                     </svg>
                     </div>
                 </div>
+
+                <div class="score" id="score2" >
+                    
+                    <div id="p2_score" class="text-nowrap">0</div>
+                </div>
                 
             </div>
         </div>
 
-        <div id="score_layer" class="d-flex justify-content-between">
+        <!--<div id="score_layer" class="d-flex justify-content-between">
             <div class="score">
                 <img class="imgscore" src="img/score1.png" alt="1">
                 <div id="p1_score">0</div>
             </div>
-            <div id="timer">:15</div>
+            
             <div class="score" id="score2" >
                 <img class="imgscore" src="img/score1.png" alt="1">
                 <div id="p2_score">0</div>
             </div>
-        </div>
+        </div> -->
         <div id="points_add" class="d-flex justify-content-between">
             <div id="p1_score_add" class="alert alert-success"  role="alert">+1337</div>
-            <div id="goal">Goal: 30.000.000</div>
+              
+            <div id="player_turn" class="text-nowrap">Ход игрока 1</div>
+
             <div id="p2_score_add" class="alert alert-success"  role="alert">+1488</div>
         </div>
 

@@ -35,7 +35,7 @@ body{
     position: relative;
 }
 #timer_icon{
-    margin-top: 10px;
+    margin-bottom: 16px;
     width:60px; 
     height:60px;
 }
@@ -74,7 +74,18 @@ body{
     position: relative;
 }
 .player{
-    margin-bottom: 16px;
+    white-space: nowrap;
+    margin-bottom: 28px;
+    
+}
+.playername{
+    border: black 1px solid;
+    padding: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 30%;
+    background-color: #dee2e6;
+    
 }
 .playermain{
     width: 11%;
@@ -90,28 +101,7 @@ body{
     width: 100%;
 }
 
-@media screen and (max-width: 450px){
-    .imgscore{
-        width: 240%;
-        right: 10%;
-    }
-    .score{
-        width: 13%;
-    }
-    #p1_score,#p2_score{
-        left: 120%;
-    }
-    #score2{
-        right:16%;
-    }
-    .playername{
-        width:115%;
-    }
-    .playermain{
-        width: 30%;
-        right: 10%;
-    }
-} 
+
 .bi-heart-fill{
     color: red;
 }
@@ -119,6 +109,7 @@ body{
     color: red;
 }
 #p1_score_add, #p2_score_add{
+    margin-top: -16px;
     opacity: 0;
     
 }
@@ -289,4 +280,25 @@ body{
     }
     
     
+}
+
+.heart img{
+    width: 28px;
+}
+
+.score{
+    margin-top: 28px;
+    
+}
+#p1_score,#p2_score{
+    background-color: #dee2e6;
+    
+    padding: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: 1px solid black;
+    border-radius: 30%;
+}
+.arr{
+    position: relative;
 }

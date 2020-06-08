@@ -219,7 +219,7 @@ jQuery(document).ready(function($) {
         //console.log(city);
         $(".card img").attr("src",imgSrc);
         $(".card-title").text(firstLetter(city));
-        $(".card-text").text("Население: "+population+" чел.");
+        $(".card-text").text("Население: "+beautifulNum(population)+" чел.");
         $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
     }
 
@@ -241,17 +241,19 @@ jQuery(document).ready(function($) {
 
         if(player == 1){
             p1score+= population;
-            $("#p1_score").text(p1score);
+            
+            $("#p1_score").text(beautifulNum(p1score));
             //$("#p1_score_add").show('slow');
             turn++;
             if (p1score>=points) gameOver(1);
         }
         else{
             p2score+= population;
-            $("#p2_score").text(p2score);
+            $("#p2_score").text(beautifulNum(p2score));
             turn--;
             if (p2score>=points) gameOver(2);
         }
+        $("#player_turn").text("Ход игрока "+turn);
     }
 
     function HPloss(p){
@@ -300,13 +302,14 @@ jQuery(document).ready(function($) {
             else{                    
                 clearInterval(timer);
                 console.log("TimeFail");
-                console.log("Сейчас ход был ход игрока: "+turn);
+                //console.log("Сейчас ход был ход игрока: "+turn);
                 HPloss(turn);
                 if (turn===1)
                     turn++;
                 else
                     turn--;
-                console.log(turn);
+                $("#player_turn").text("Ход игрока "+turn);
+                //console.log(turn);
                 if(!state_gameover){
                     if (arrayCities.length<5)
                         SetTimer(15);
@@ -346,8 +349,8 @@ jQuery(document).ready(function($) {
                 
                 if($("#inputset").val()!=="") 
                     points=$("#inputset").val();
-
-                $("#goal").text("Goal: "+points);
+                
+                $("#goal").text("Цель: "+beautifulNum(points));
             
             });
 
@@ -404,6 +407,7 @@ jQuery(document).ready(function($) {
         $('.card-text').text("Информация о городе");
         $('#wikiLink').attr("href","#");
         $(".card img").attr("src","img/q.png");
+        $("#player_turn").text("Ход игрока 1");
         setDifficulty();
         p1score = 0;
         p2score = 0;
@@ -411,6 +415,10 @@ jQuery(document).ready(function($) {
         turn = 1;
         clearInterval(timer);
         console.log(state_gameover,p1score,arrayCities);
+    }
+
+    function beautifulNum(num){
+       return num.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
     }
 
 });
