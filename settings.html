@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Настройки</title>
     </head>
-    <body>
+    <body id="setting_body">
         <div id="settings" class="text-center">
         <div id="block1">
             <h1>Настройки</h1>
@@ -27,13 +27,12 @@ and open the template in the editor.
             </div>
         </div>
         <div id="block3">
-           <!-- <input type="range" class="custom-range" min="20000000" max="100000000" step="100000" id="customRange3">-->
-           <div class=" input-group flex-nowrap">
-            <input id="inputset" type="text" class="form-control" placeholder="Выигрышное количество очков">
+            <div class=" input-group-settings flex-nowrap">
+            <input id="inputset" type="number" class="form-control" min="30000000" step="100000" data-bind="value:replyNumber" placeholder="Выигрышное количество очков">
         </div>
         </div>
         <div id="block4">
-            
+            <button id="restart_button" type="button" class="btn btn-outline-warning">Начать заново</button>
         </div>
         <div id="block5" class="d-flex justify-content-around">
             <button id="save_button" type="button" class="btn btn-outline-success">Сохранить изменения</button>

@@ -232,12 +232,12 @@ jQuery(document).ready(function($) {
         //$("#p2_score_add").show('slow');
 
         setTimeout(function () {
-            //$("#p"+player+"_score_add").css({opacity: 0});
             $("#p"+player+"_score_add").fadeTo('fast',0);
-            // $("#p1_score_add").hide('slow');
-            //$("#p2_score_add").hide('slow');
-            
         }, 1500);
+
+        setTimeout(function(){
+            $("#p"+player+"_score_add").text("+1337");
+        },1800)
 
         if(player == 1){
             p1score+= population;
@@ -346,6 +346,8 @@ jQuery(document).ready(function($) {
                 
                 if($("#inputset").val()!=="") 
                     points=$("#inputset").val();
+
+                $("#goal").text("Goal: "+points);
             
             });
 
@@ -368,10 +370,13 @@ jQuery(document).ready(function($) {
         state_gameover = true;
         clearInterval(timer);
         console.log("GAMEOVER");
-        
+
+        $("#input").attr("readonly","readonly");
+        $("#input").val("");
+        $("#input").attr("placeholder","Игра окончена!");
         $("#popup, #popup_overlay").fadeIn();       
         $("#popup").load("js/popup_gameover1.html", function(){
-                $("#winner").text("Победа Игрока "+p);
+                $("#winner_t").text("Победа Игрока "+p);
                 $("#retry").click(function(){
                     restartGame();
                 });
@@ -387,6 +392,9 @@ jQuery(document).ready(function($) {
             $("#p2_HP"+i).replaceWith("<svg id='p2_HP"+i+"' class='bi bi-heart-fill' width='1em' height='1em' viewBox='0 0 16 16' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'/></svg>");
         }
         state_gameover = false;
+        $("#input").removeAttr("readonly");
+        $("#input").val("");
+        $("#input").attr("placeholder","Город");
         $("#p1_score").text("0");
         $("#p2_score").text("0");
         $('#timer').text(":15");
@@ -396,7 +404,6 @@ jQuery(document).ready(function($) {
         $('.card-text').text("Информация о городе");
         $('#wikiLink').attr("href","#");
         $(".card img").attr("src","img/q.png");
-
         setDifficulty();
         p1score = 0;
         p2score = 0;

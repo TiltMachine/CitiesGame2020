@@ -5,6 +5,20 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+#settings{
+    background: url(../img/settings.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:white;
+}
+#finish{
+    background: url(../img/gameover_bg1.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:white;
+}
 
 .my_header {
     margin-bottom: 80px;
@@ -60,7 +74,7 @@ body{
     position: relative;
 }
 .player{
-    margin-bottom: 5%;
+    margin-bottom: 16px;
 }
 .playermain{
     width: 11%;
@@ -75,6 +89,7 @@ body{
 .imgplayer{
     width: 100%;
 }
+
 @media screen and (max-width: 450px){
     .imgscore{
         width: 240%;
@@ -257,4 +272,21 @@ body{
 }
 #winner{
     text-align: center;
+}
+.input-group-settings{
+    left: 50%;
+    margin-left: -9rem;
+    position: relative;
+    width: 18rem;
+}
+
+@media screen and (max-width: 490px) {
+    .input-group-settings{
+        left: 8%;
+        margin-left: 1rem;
+        position: relative;
+        width: 10rem;
+    }
+    
+    
 }
