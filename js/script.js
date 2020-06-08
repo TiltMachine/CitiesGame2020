@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
         input = clear(input);
         
         
-        $.get("https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
+        $.get("https://cors-anywhere.herokuapp.com/https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
             
             const htmlString = data;
@@ -69,7 +69,7 @@ jQuery(document).ready(function($) {
                 Error("Такой город нам неизвестен!");
             }
         }).done(function() {
-            var url = "https://yandex.ru/images/search?text=город%20"+input;
+            var url = "https://cors-anywhere.herokuapp.com/https://yandex.ru/images/search?text=город%20"+input;
             //var url = "https://duckduckgo.com/?q=город+"+input+"&=h_&iar=images&iax=images&ia=images";
             //console.log("in: "+ url);
             $.get(url, function(d) {
