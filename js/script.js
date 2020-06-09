@@ -10,6 +10,37 @@ jQuery(document).ready(function($) {
     var points=30000000;
 
 
+
+    let timerInterval = null;
+
+    const FULL_DASH_ARRAY = 283;
+    const yellow_threshold = 10;
+    const red_threshold = 5;
+    
+    const COLOR_CODES = {
+    green: {
+        color: "green"
+    },
+    warning: {
+        color: "orange",
+        threshold: yellow_threshold
+    },
+    alert: {
+        color: "red",
+        threshold: red_threshold
+    }
+    };
+    
+    var TIME_LIMIT = 15;
+    let timePassed = 0;
+    let timeLeft = TIME_LIMIT;
+    
+    let currentColor = COLOR_CODES.green.color;
+    
+    $("#base-timer-path-remaining").attr("class","base-timer__path-remaining "+currentColor);
+    //$("#base-timer-label").text("0:15");
+
+
     function setDifficulty(){
         if(difficulty==1){
             p1hp = 1;
@@ -34,7 +65,8 @@ jQuery(document).ready(function($) {
         input = clear(input);
 
         $(".spinner-border").show();
-        clearInterval(timer);
+        //clearInterval(timer);
+        stopTimer(); ////////////////////////////////////////////////////////////////
         //https://cors-anywhere.herokuapp.com/
         $.get("https://cors-anywhere.herokuapp.com/https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
@@ -71,17 +103,15 @@ jQuery(document).ready(function($) {
                 Error("Такой город нам неизвестен!");
             }
         }).done(function() {
-            $(".spinner-border").hide();
-            if(!ErrorStatus){
-                checkCity(input);
-            }
-
-                
+                $(".spinner-border").hide();
+                if(!ErrorStatus){
+                    checkCity(input);
+                }     
             })
             .fail(function() {
-            $(".spinner-border").hide();
-            console.log("ERROR: 404 страницы не существует!");
-            Error("Такой город нам неизвестен!");
+                $(".spinner-border").hide();
+                console.log("ERROR: 404 страницы не существует!");
+                Error("Такой город нам неизвестен!");
             });
 
     }
@@ -103,12 +133,18 @@ jQuery(document).ready(function($) {
         setTimeout(function () {
             $(".alert-danger").hide('350');
         }, 3000);
-
-        var currTimeLeft = $('#timer').text();
-        if(parseInt(currTimeLeft[1])==0)
-            SetTimer(parseInt(currTimeLeft[2]));
-        else
-            SetTimer(parseInt(currTimeLeft[1]+currTimeLeft[2]));
+        
+        if(!state_gameover){
+            var currTimeLeft = $('#base-timer-label').text();
+            if(parseInt(currTimeLeft[2])==0){
+                //SetTimer(parseInt(currTimeLeft[2]));
+                startTimer(parseInt(currTimeLeft[3])); ////////////////////////////////////////////////////
+            }
+            else{
+                //SetTimer(parseInt(currTimeLeft[1]+currTimeLeft[2]));
+                startTimer(parseInt(currTimeLeft[2]+currTimeLeft[3])); ///////////////////////////////////////
+            }
+        }
     }
 
     function checkCity(city){
@@ -119,7 +155,10 @@ jQuery(document).ready(function($) {
             arrayCities.push(city);
 
             console.log(arrayCities);
-            SetTimer(15);
+            //SetTimer(15);
+            
+            startTimer(15); //////////////////////////////////////////////////////
+
             forFirstChar(city);
             Card(city);
 
@@ -145,13 +184,20 @@ jQuery(document).ready(function($) {
                 arrayCities.push(city);
                 console.log(arrayCities);
                 
-                clearInterval(timer);
-                if (arrayCities.length<5)
-                    SetTimer(15);
-                else if (arrayCities.length<10)
-                    SetTimer(30);
-                else 
-                    SetTimer(45);
+                //clearInterval(timer);
+                stopTimer(); ///////////////////////////////////////////
+                if (arrayCities.length<5){
+                    //SetTimer(15);
+                    startTimer(15); //////////////////////////////////////////////////////
+                }
+                else if (arrayCities.length<10){
+                    //SetTimer(30);
+                    startTimer(30); //////////////////////////////////////////////////////
+                }
+                else {
+                    //SetTimer(45);
+                    startTimer(45); //////////////////////////////////////////////////////
+                }
 
                 forFirstChar(city);
                 Card(city);
@@ -271,36 +317,7 @@ jQuery(document).ready(function($) {
         return newstr;
     }
 
-    function SetTimer(time){
-        timer=setInterval(function() {
-            if (time>9)
-                $('#timer').text(":"+time+"");
-            else
-                $('#timer').text(":0"+time+"");
-            if (time>0) 
-                time--; 
-            else{                    
-                clearInterval(timer);
-                console.log("TimeFail");
-                //console.log("Сейчас ход был ход игрока: "+turn);
-                HPloss(turn);
-                if (turn===1)
-                    turn++;
-                else
-                    turn--;
-                $("#player_turn").text("Ход игрока "+turn);
-                //console.log(turn);
-                if(!state_gameover){
-                    if (arrayCities.length<5)
-                        SetTimer(15);
-                    else if (arrayCities.length<10)
-                        SetTimer(30);
-                    else
-                        SetTimer(45);
-                }
-            }
-        }, 1000);
-    }
+    
 
     $("#settings_icon").click(function(){
         settingsMenuOpen();
@@ -351,7 +368,8 @@ jQuery(document).ready(function($) {
     
     function gameOver(p){
         state_gameover = true;
-        clearInterval(timer);
+        //clearInterval(timer);
+        stopTimer(); ///////////////////////////
         console.log("GAMEOVER");
 
         $("#input").attr("readonly","readonly");
@@ -393,7 +411,8 @@ jQuery(document).ready(function($) {
         p2score = 0;
         arrayCities = [];
         turn = 1;
-        clearInterval(timer);
+        //clearInterval(timer);
+        stopTimer(); /////////////////////////////////
         console.log(state_gameover,p1score,arrayCities);
     }
 
@@ -413,6 +432,147 @@ jQuery(document).ready(function($) {
         else
             $(".card img").attr("src","img/tiny.jpg");
     }
+
+
+    
+
+
+  //  function timer1337(sec){
+
+    /*
+        const FULL_DASH_ARRAY = 283;
+        const yellow_threshold = 10;
+        const red_threshold = 5;
+        
+        const COLOR_CODES = {
+        green: {
+            color: "green"
+        },
+        warning: {
+            color: "orange",
+            threshold: yellow_threshold
+        },
+        alert: {
+            color: "red",
+            threshold: red_threshold
+        }
+        };
+        
+        var TIME_LIMIT = sec;
+        let timePassed = 0;
+        let timeLeft = TIME_LIMIT;
+        
+        let currentColor = COLOR_CODES.green.color;
+        
+        $("#base-timer-path-remaining").attr("class","base-timer__path-remaining "+currentColor);
+        $("#base-timer-label").text(formatTime(timeLeft));
+        
+        
+        startTimer(); */
+        
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+        
+        function startTimer(t) {
+            TIME_LIMIT = t;
+            timePassed = 0;
+            timeLeft = TIME_LIMIT;
+            currentColor = COLOR_CODES.green.color;
+        
+            $("#base-timer-path-remaining").attr("class","base-timer__path-remaining "+currentColor);
+            $("#base-timer-label").text(formatTime(timeLeft));
+
+            timerInterval = setInterval(function() {
+                timePassed += 1;
+                timeLeft = TIME_LIMIT - timePassed;
+                $("#base-timer-label").text(formatTime(timeLeft));
+                setCircleDasharray();
+                setcurrentColor(timeLeft);
+            
+                if (timeLeft === 0){
+                    stopTimer();
+
+                    //clearInterval(timer);
+
+                //stopTimer(); /////////////////////////////////////////////////
+                console.log("TimeFail");
+                //console.log("Сейчас ход был ход игрока: "+turn);
+                HPloss(turn);
+                if (turn===1)
+                    turn++;
+                else
+                    turn--;
+                $("#player_turn").text("Ход игрока "+turn);
+                //console.log(turn);
+                if(!state_gameover){
+                    if (arrayCities.length<5){
+                        //SetTimer(15);
+                        startTimer(15); //////////////////////////////////////////////////////
+                    }
+                    else if (arrayCities.length<10){
+                        //SetTimer(30);
+                        startTimer(30); //////////////////////////////////////////////////////
+                    }
+                    else{
+                        //SetTimer(45);
+                        startTimer(45); //////////////////////////////////////////////////////
+                    }
+                }
+
+                }
+                    
+                
+            }, 1000);
+        }
+        
+        function formatTime(time) {
+            const minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            
+            if (seconds < 10) 
+                seconds = "0"+seconds;
+
+            return `${minutes}:${seconds}`;
+        }
+        
+        function setcurrentColor(timeLeft) {
+            const { alert, warning, green } = COLOR_CODES;
+            if (timeLeft <= alert.threshold) {
+                document.getElementById("base-timer-path-remaining").classList.remove(warning.color);
+                document.getElementById("base-timer-path-remaining").classList.add(alert.color);
+            } else if (timeLeft <= warning.threshold) {
+                document.getElementById("base-timer-path-remaining").classList.remove(green.color);
+                document.getElementById("base-timer-path-remaining").classList.add(warning.color);
+            }
+        }
+        
+        function calculateTimeFraction() {
+            const rawTimeFraction = timeLeft / TIME_LIMIT;
+            return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+        }
+        
+        function setCircleDasharray() {
+            const circleDasharray = `${(calculateTimeFraction() * FULL_DASH_ARRAY).toFixed(0)} 283`;
+            $("#base-timer-path-remaining").attr("stroke-dasharray", circleDasharray);
+        }
+
+
+   // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 });
 

@@ -1,8 +1,9 @@
 
 body{
+    font-family: cursive;
     background: url(../img/bg6.jpg);
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat;
     background-size: cover;
 }
 #settings{
@@ -84,7 +85,7 @@ body{
     padding-left: 15px;
     padding-right: 15px;
     border-radius: 30%;
-    background-color: #38a2ffc7;
+    background-color: #07aaf75e;
     
 }
 .playermain{
@@ -290,7 +291,7 @@ body{
     
 }
 #p1_score,#p2_score{
-    background-color: #38a2ffc7;
+    background-color: #07aaf75e;
     
     padding: 3px;
     padding-left: 15px;
@@ -325,6 +326,14 @@ body{
         width: 1rem;
         height: 1rem;
     }
+    #save_button{
+        width: 50%;
+        font-size: 1rem;
+    }
+    #go_back_button{
+        width: 30%;
+        font-size: 1rem;
+    }
 }
 @media screen and (max-width: 415px) {
     .spinner-border{
@@ -342,4 +351,68 @@ body{
         height: 1rem;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.base-timer {
+    position: relative;
+    width: 300px;
+    height: 300px;
+  }
+  
+  .base-timer__svg {
+    transform: scaleX(-1);
+  }
+  
+  .base-timer__circle {
+    fill: none;
+    stroke: none;
+  }
+  
+  .base-timer__path-elapsed {
+    stroke-width: 7px;
+    stroke: grey;
+  }
+  
+  .base-timer__path-remaining {
+    stroke-width: 7px;
+    stroke-linecap: round;
+    transform: rotate(90deg);
+    transform-origin: center;
+    transition: 1s linear all;
+    fill-rule: nonzero;
+    stroke: currentColor;
+  }
+  
+  .base-timer__path-remaining.green {
+    color: rgb(65, 184, 131);
+  }
+  
+  .base-timer__path-remaining.orange {
+    color: orange;
+  }
+  
+  .base-timer__path-remaining.red {
+    color: red;
+  }
+  
+  .base-timer__label {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+  }
     
