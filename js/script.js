@@ -106,14 +106,6 @@ jQuery(document).ready(function($) {
     }
     
 
-    $(".input-group").click(function(){
-        console.log(state_gameover,p1score,arrayCities);
-
-        if(state_gameover){
-            
-            console.log("vse");
-        }
-    });
     $("#input").keypress(function(event) {
         if (event.keyCode == 13)
             myClick();
@@ -121,6 +113,7 @@ jQuery(document).ready(function($) {
     
 
     function Error(message){
+        
         ErrorStatus = true;
         HPloss(turn);
         $(".alert-danger").text(message);
@@ -130,9 +123,11 @@ jQuery(document).ready(function($) {
             $(".alert-danger").hide('350');
         }, 3000);
 
-
-
-
+        var currTimeLeft = $('#timer').text();
+        if(parseInt(currTimeLeft[1])==0)
+            SetTimer(parseInt(currTimeLeft[2]));
+        else
+            SetTimer(parseInt(currTimeLeft[1]+currTimeLeft[2]));
     }
 
     function checkCity(city){
