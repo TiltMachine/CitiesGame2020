@@ -6,11 +6,6 @@
 	<title>Города: новый уровень</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-   <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    -->
     <script src="js/jquery.min.js"></script>
     <script src="js/script.js"></script>
    
@@ -28,20 +23,13 @@
 	</header>
 
 
-
-
-
-    <!--<div class="col">
-                <button id="enter" type="button" class="btn btn-primary">Ввод</button>
-            </div> -->
-
     <div class="container text-center">
 
         <div id="first_layer" class="d-flex justify-content-between">
             <div class="playermain">
                 <div class="player">
                     
-                    <div class="playername">Игрок 1</div>
+                    <div id="player_name1" class="playername">Игрок 1</div>
                 </div>
 
                 <div id="p1_HP" class="d-flex flex-row justify-content-around">
@@ -101,9 +89,8 @@
             </div>
             
             <div class="playermain">
-                <div class="player">
-                    
-                    <div class="playername">Игрок 2</div>
+                <div  class="player">
+                    <div id="player_name2" class="playername">Игрок 2</div>
                 </div>
                 <div id="p2_HP" class="d-flex flex-row justify-content-around">
                     <div class="heart">
@@ -134,18 +121,7 @@
             </div>
         </div>
 
-        <!--<div id="score_layer" class="d-flex justify-content-between">
-            <div class="score">
-                <img class="imgscore" src="img/score1.png" alt="1">
-                <div id="p1_score">0</div>
-            </div>
-            
-            <div class="score" id="score2" >
-                <img class="imgscore" src="img/score1.png" alt="1">
-                <div id="p2_score">0</div>
-            </div>
-        </div> -->
-        <div id="points_add" class="d-flex justify-content-between">
+        <div id="points_add" class="d-flex">
             <div id="p1_score_add" class="alert alert-success"  role="alert">+1337</div>
               
             <div id="player_turn" class="text-nowrap">Ход игрока 1</div>
@@ -206,5 +182,4 @@
     
     
 </body>
-
 </html>
