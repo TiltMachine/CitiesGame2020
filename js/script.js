@@ -32,8 +32,10 @@ jQuery(document).ready(function($) {
 
         var input = $("#input").val();
         input = clear(input);
-        
-        
+
+        $(".spinner-border").show();
+        clearInterval(timer);
+        //https://cors-anywhere.herokuapp.com/
         $.get("https://cors-anywhere.herokuapp.com/https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
             
             
@@ -69,7 +71,8 @@ jQuery(document).ready(function($) {
                 Error("Такой город нам неизвестен!");
             }
         }).done(function() {
-            var url = "https://cors-anywhere.herokuapp.com/https://yandex.ru/images/search?text=город%20"+input;
+            $(".spinner-border").hide();
+            var url = "https://yandex.ru/images/search?text=город%20"+input;
             //var url = "https://duckduckgo.com/?q=город+"+input+"&=h_&iar=images&iax=images&ia=images";
             //console.log("in: "+ url);
             $.get(url, function(d) {
@@ -95,6 +98,7 @@ jQuery(document).ready(function($) {
                 
             })
             .fail(function() {
+            $(".spinner-border").hide();
             console.log("ERROR: 404 страницы не существует!");
             Error("Такой город нам неизвестен!");
             });
@@ -427,5 +431,7 @@ jQuery(document).ready(function($) {
 
 картинки с яндекса требуют капчу
 
-
+// сценарий показа сайта
+// переход хода к другому
+//анимация загруки
 */

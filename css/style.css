@@ -302,3 +302,6 @@ body{
 .arr{
     position: relative;
 }
+.spinner-border{
+    display: none;
+}
