@@ -72,7 +72,7 @@ jQuery(document).ready(function($) {
             }
         }).done(function() {
             $(".spinner-border").hide();
-            var url = "https://yandex.ru/images/search?text=город%20"+input;
+            var url = "https://cors-anywhere.herokuapp.com/https://yandex.ru/images/search?text=город%20"+input;
             //var url = "https://duckduckgo.com/?q=город+"+input+"&=h_&iar=images&iax=images&ia=images";
             //console.log("in: "+ url);
             $.get(url, function(d) {
