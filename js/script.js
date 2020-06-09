@@ -72,28 +72,9 @@ jQuery(document).ready(function($) {
             }
         }).done(function() {
             $(".spinner-border").hide();
-            var url = "https://cors-anywhere.herokuapp.com/https://yandex.ru/images/search?text=город%20"+input;
-            //var url = "https://duckduckgo.com/?q=город+"+input+"&=h_&iar=images&iax=images&ia=images";
-            //console.log("in: "+ url);
-            $.get(url, function(d) {
-                    const htmlString = d;
-                    //console.log(htmlString);
-                    const parser = new DOMParser();
-                    var document = parser.parseFromString(htmlString, 'text/html');
-                    var pics = document.querySelectorAll("div > a > img");
-                    //var pics = document.querySelectorAll("#zci-images > div > div.tile-wrap > div > div:nth-child(3) > div.tile--img__media > span > img");
-                    //console.log(pics);
-                    imgSrc = "https:"+$(pics[0]).attr("src");
-                    
-                    //console.log(imgSrc);
-                }).done(function() {
-
-                    if(!ErrorStatus){
-                        checkCity(input);
-                    }
-
-
-                });
+            if(!ErrorStatus){
+                checkCity(input);
+            }
 
                 
             })
@@ -216,7 +197,7 @@ jQuery(document).ready(function($) {
         //console.log(city);
         //city = clear(city);
         //console.log(city);
-        $(".card img").attr("src",imgSrc);
+        cityImg();
         $(".card-title").text(firstLetter(city));
         $(".card-text").text("Население: "+beautifulNum(population)+" чел.");
         $("#wikiLink").attr("href","https://ru.wikipedia.org/wiki/"+city+"");
@@ -405,7 +386,7 @@ jQuery(document).ready(function($) {
         $('.card-title').text("Название города");
         $('.card-text').text("Информация о городе");
         $('#wikiLink').attr("href","#");
-        $(".card img").attr("src","img/q.png");
+        $(".card img").attr("src","img/huge.jpg");
         $("#player_turn").text("Ход игрока 1");
         setDifficulty();
         p1score = 0;
@@ -418,6 +399,19 @@ jQuery(document).ready(function($) {
 
     function beautifulNum(num){
        return num.toString().replace(/(\d)(?=(\d{3})+$)/g, '$1 ');
+    }
+
+    function cityImg(){
+        if (population>1000000)
+            $(".card img").attr("src","img/huge.jpg");
+        else if (population>500000)
+            $(".card img").attr("src","img/big.jpg");
+        else if (population>100000)
+            $(".card img").attr("src","img/medium.jpg");
+        else if (population>20000)
+            $(".card img").attr("src","img/small.jpg");
+        else
+            $(".card img").attr("src","img/tiny.jpg");
     }
 
 });
