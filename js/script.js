@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 
 
 
-    let timerInterval = null;
+    var timerInterval = null;
 
     const full_circle_line = 283;
     const yellow_threshold = 10;
@@ -30,10 +30,10 @@ jQuery(document).ready(function($) {
     };
     
     var timeMax = 15;
-    let timePassed = 0;
-    let timeLeft = timeMax;
+    var timePassed = 0;
+    var timeLeft = timeMax;
     
-    let currentColor = COLOR_CODES.green.color;
+    var currentColor = COLOR_CODES.green.color;
     
     $("#base-timer-path-remaining").attr("class","base-timer__path-remaining "+currentColor);
     $("#player_name1").css("background-color","#21f707a6");
@@ -62,7 +62,7 @@ jQuery(document).ready(function($) {
         
         stopTimer(); 
         
-        $.get("https://cors-anywhere.herokuapp.com/https://geo.koltyrin.ru/goroda_poisk.php?city="+input+"", function(data) {
+        $.get("https://cors-anywhere.herokuapp.com/https://geo.koltyrin.ru/goroda_poisk.php?city="+input, function(data) {
             
             
             const htmlString = data;
@@ -375,12 +375,15 @@ jQuery(document).ready(function($) {
         $("#popup").load("html/popup_gameover1.html", function(){
 
                 $("#winner_t").text("Победа Игрока "+p);
+
                 $("#retry").click(function(){
                     restartGame();
                 });
+
                 $("#goto_settings").click(function(){
                     settingsMenuOpen();
                 });
+        
         });
     }
 
@@ -404,7 +407,13 @@ jQuery(document).ready(function($) {
         $(".card img").attr("src","img/huge.jpg");
         $("#player_turn").text("Ход игрока 1");
         $("#player_name1").css("background-color","#21f707a6")
-        $("#player_name2").css("background-color","#07aaf75e"); 
+        $("#player_name2").css("background-color","#07aaf75e");
+        
+        timeMax = 15;
+        timeLeft = timeMax;
+        $("#base-timer-path-remaining").attr("class","base-timer__path-remaining green");
+        setCircleDasharray();
+
          
         setDifficulty();
         p1score = 0;
@@ -493,7 +502,7 @@ jQuery(document).ready(function($) {
     
     function formatTime(time) {
         const minutes = Math.floor(time / 60);
-        let seconds = time % 60;
+        var seconds = time % 60;
         
         if (seconds < 10) 
             seconds = "0"+seconds;
